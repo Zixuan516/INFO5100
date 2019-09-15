@@ -1,0 +1,131 @@
+Design a Course Registration Platform
+
+Student can
+1.	Login
+2.	Find all courses 
+3.	Find all courses available
+4.	Search for a specific course
+5.	Register a session
+6.	Drop a session
+7.	Add to waitlist
+8. Review sessionList
+
+------------------------------------------------------------------------
+Class: Student
+Data: studentID, studentName, studentPhoneNumber, studentEmail, studentMajor, List<Session> sessionList, 
+Behavior:
+login() {
+   registrationService.login(studentID);
+}
+findAllCourses() {
+   registrationService.listAllCourses (studentID);
+}
+findAvailableCourses() {
+   registrationService.listAvailableCourses(studentID);
+}
+searchCourse(keyword) {
+   registrationService.searchCourse(keyword);
+}
+registerSession(SessionID) {
+   registrationService.register(studentID, SessionID);
+}
+dropSession(sessionID) {
+   registrationService.dropSession(studentID, SessionID);
+}
+addToWaitlist() {
+   registrationService.addWaitlist(studentID, SessionID);
+}
+review() {
+   registrationService.review(studentID);
+}
+------------------------------------------------------------------------
+Class: RegistrationService
+Data: 
+Behavior:
+login(studentID) {
+   List<String> idList = getAllStudentIds();
+   Boolean result = false;
+   foreach(String id in idList) {
+      if (id == studentID) {
+         result = true;
+         return buildLoginResult(result);
+}
+}
+   throw error;
+}
+listAllCourses (studentID) {
+List<Course> coursesList = getAllCourses();
+List<Course> matchCoursesList;
+   foreach(Course course in coursesList) {
+      if (course.courseMajor == student.studentMajor) {
+         matchCoursesList.add(course);
+      }
+   }
+   return matchCoursesList;
+}
+listAvailableCourses(studentID) {
+   List<Course> coursesList = getAllCourses();
+   List<Course> matchCoursesList;
+   foreach(Course course in courseList) {
+      if (course.courseMajor == student.studentMajor && course.isAvailable()) {
+         matchCoursesList.add(course);
+      }
+   }
+   return matchCoursesList;
+}
+searchCourse(keyword) {
+   List<Course> coursesList = getAllCourses ();
+   List<Course> matchCoursesList;
+   foreach(Course course in coursesList) {
+      if (course.name.contains(keyword) || course.ID.equals(keyword)) {
+         matchCoursesList.add(course);
+      }
+   }
+   return matchCoursesList;
+}
+
+register(studentID, sessionID){
+   Student student = getStudent(studentID);
+   Session session = getSession(sessionID);
+   student.sessionList.add(session);
+   session.studentList.add(student);
+}
+
+dropSession(studentID, sessionID) {
+   Student student = getStudent(studentID);
+   Session session = getSession(sessionID);
+   student.sessionList.remove(session);
+   session.studentList.remove(student);
+   waitListService.addStudent(sessionID);
+   
+}
+addWaitlist(studentID, sessionID) {
+   Session session = getSession(sessionID);
+   session.waitlist.add(getStudent(studentID));
+}
+review(studentID) {
+   Student student = getStudent(studentID);
+   return student.sessionList;
+}
+------------------------------------------------------------------------
+Class: WaitListService
+Data: 
+Behavior:
+addStudent(sessionID) {
+   Session session = getSession(sessionID);
+   Student addStudent = session.waitlist.getFirst();
+   session.studentList.add(addStudent);
+   session.waitlist.removeFirst();
+   alert(addStudent);
+}
+------------------------------------------------------------------------
+Class: Course
+Data: String courseName, String courseID, List<Session> sessions
+
+------------------------------------------------------------------------
+Class: Session
+Data: sessionID, sessionTime, sessionTeacher, maxSize, List<Student> studentList, List<Student> waitList,
+Behavior:
+isAvailable() {
+   return studentList.size() < maxSize;
+}

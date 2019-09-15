@@ -1,0 +1,113 @@
+Design a Car Rental System
+
+User can
+1. Login APP
+2. Search for a car
+3. Place an order
+4. Cancel an order
+
+------------------------------------------------------------------------
+Class: User
+Data: userName, phone, order, userPreference [startData, endData, color, size, capacity, type, brand]
+Behaviour:
+loginApp() {
+   App.login(name);
+}
+
+selectCar(){
+   App.listCar(userName, userPreference);
+}
+
+placeOrder(){
+   if(CreditCard.cardAvailable(){
+      if(confirm) {
+         App.orderStart();
+      } else {
+         return false;
+      }
+   }
+}
+
+cancelOrder(){
+   APP.orderEnd();
+}
+------------------------------------------------------------------------
+Class: UserPreference
+Data: startDate, endDate, color, size, capacity, type, brand
+------------------------------------------------------------------------
+Class: APP
+Data: status
+Behaviour:
+login(String name) {
+   List<String> nameList;
+   status = false;
+   foreach(String name in nameList){
+      if(userName == name){
+         status = true;
+      }
+   }
+}
+
+listCar(String userName, UserPreference userPreference){
+List<Car> carList;
+List<Car> selectedCarList;
+
+Foreach(Car car in carList){
+Boolean car.match = true;
+startDate = userPreference.startDate;
+While(startDate.compareTo(userPreference.endDate)){
+if(!car.carAvailable(startDate)){
+   car.match = false;
+   break;
+}
+startDate++;
+}
+
+if (!doesCarFeatureMatch(car.feature, userPreference)) {
+   car.match = false;
+}
+
+if(car.match == true){
+   selectedCarList.add(car);
+}
+}
+
+
+System.out.printf(selectedCarList);
+return selectCarList;
+}
+
+OrderStart(){
+   if (user.placeOrder()){
+      List info;
+      info.add(username);
+      info.add(car.carID);
+      car.order = info;
+      user.order = info;
+   }
+}
+
+orderEnd(){
+   alert(user);
+   alert(car);
+   car.order = null;
+   user.order = null;
+}
+------------------------------------------------------------------------
+Class: Car
+Data: carID, Feature[capacity, size, color, type, brand], match, order;
+Behaviour:
+carAvailable(data){
+   return order != null;
+}
+
+------------------------------------------------------------------------
+Class: CreditCard
+Data: bankName, cardNumber, name, phone, address, expireDate
+Behaviour:
+cardAvailable(){
+   Date today = new Date();
+   return today.compareTo(expireDate);
+}
+
+

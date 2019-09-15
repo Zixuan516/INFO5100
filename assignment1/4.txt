@@ -1,0 +1,110 @@
+Design a vending Machine (will accept coins of different denominations and vends out candies, soda etc)
+
+buyer can
+1. select a commodity，if it is not available, show "sold out"
+2. begin to insert coins, if the coin can not be distinguished, the Machine will not accept it
+3. the Machine show the sum of money has been inserted
+5. if the money is not enough, warn buyer to insert more coins
+6.	if the money is enough, vend the commodity.
+7. if the money is more than the price, return the price difference.
+
+------------------------------------------------------------------------
+Class: buyer
+Data: 
+Behavior：
+insert(coin) {
+   machine.accept(coin);
+}
+
+
+
+choose(commodityID) {
+   machine.choose(commodityID);
+}
+
+
+end() {
+   machine.end();
+}
+
+
+------------------------------------------------------------------------
+Class: Machine
+Data: balance, List<int> validCoins
+
+Behavior：
+acceptCoin(coin) {
+   coinManager.insert(coin);
+   if(isValid(coin)){
+      balance += coin;
+   } else{
+      System.out.print("This coin is invalid.");
+      coinManager.returnMoney(coin);
+   }
+   System.out.print("Your balance is " + balance);
+}
+
+
+isValid(coin) {
+   return validCoins.contains(coin);
+}
+
+
+choose(commodityID) {
+   Commodity commodity = get(commodityID);
+   if(commodity.isAvailable){
+      if (balance < commodity.price){
+         system.out.print("please insert coins");
+      } else {
+         vend(commodity);
+         commodity.count--;
+         balance -= commodity.price;
+         system.out.print("Your balance is " + balance);
+      }
+   }
+   else{
+      system.out.print("It has been sold out, please choose another one");
+   }
+
+end() {
+   if (balance > 0) {
+   coinManager.returnMoney(balance);
+   } 
+   system.out.print("bye bye");
+}
+------------------------------------------------------------------------
+Class: CoinManager
+
+Data: List box
+
+Behavior：
+
+
+insert(coin) {
+    box.add(coin);
+}
+
+returnMoney(value) {
+   foreach(coin in box) {
+      if (coin <= value) {
+         box.remove(coin);
+         value -= coin;
+      }
+   }
+}
+------------------------------------------------------------------------
+Class: Commodity
+
+Data: price,commodityID, count
+
+Behavior:
+
+isAvailable() {
+   return count > 0;
+}
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+Design a Traffic Controller System for a Junction
+
+
+1.	Car can go straight,go left, go right, stop, wait
+2.	pedestrain can go straight, stop, wait
+3.	light can be red yellow and green
+4. road can be available or not
+
+
+------------------------------------------------------------------------
+Class: Car
+
+Data: status, position
+
+Behavior:
+goStraight() {
+   if (!TrafficLights.forVehicle().get(position).straight.isRed()) {
+      status = RUN;
+   } else {
+      status = STOP;
+   }
+}
+
+goLeft() {
+   if (!TrafficLights.forVehicle().get(position).left.isRed()) {
+      status = RUN;
+   } else {
+      status = STOP;
+   }
+}
+
+goRight() {
+   if (!TrafficLights.forVehicle().get(position).right.isRed()) {
+      status = RUN;
+   } else {
+      status = STOP;
+   }
+}
+
+wait() {
+   status = STOP;
+}
+
+------------------------------------------------------------------------
+Enum: Status
+Value: STOP, RUN, WALK
+------------------------------------------------------------------------
+Class: Pedestrain
+Data: status, position
+Behavior:
+goStraight() {
+   if (!TrafficLights.forPedestrain().get(position).isRed()) {
+      status = WALK;
+   } else {
+      status = STOP;
+   }
+}
+
+wait() {
+   status = STOP;
+}
+
+------------------------------------------------------------------------
+Class: TrafficLights
+Data: List<DirectionLight> pedestrainLights, List<VehicleLight> vehicleLights
+Behavior:
+forVehicle() {
+   return vehicleLights;
+}
+
+forPedestrain() {
+   return pedestrainLights;
+}
+------------------------------------------------------------------------
+Class: DirectionLight
+Data: color
+Behavior:
+isRed() {
+   return color == RED;
+}
+
+setColor(color) {
+   this.color = color;
+}
+------------------------------------------------------------------------
+Class: VechicleLight
+Data: DirectionLight straight, left, right
+------------------------------------------------------------------------
+Enum: Color
+Value: GREEN, YELLOW, RED
+------------------------------------------------------------------------
+Class: TrafficControllerSystem
+Data: List<Road> roads, trafficLights, intervalPedestrain, interval
+Behavior:
+setTimer() {
+   foreach(DirectionLight light in trafficLights.forPedestrain()) {
+      setStateInterval(light, intervalPedestrain);
+   }
+
+   foreach (VehicleLight vl in trafficLights.forVehicle()) {
+      setStateInterval(vl.straight, intervalVehicle);
+      setStateInterval(vl.left, intervalVehicle);
+      setStateInterval(vl.right, intervalVehicle);
+   }
+}
+
+stopTrafficBasedOnRoadAvailability() {
+   foreach(Road road : roads) {
+      if (!road.isAvailable()) {
+         foreach(DirectionLight light in road.getPedestrainLights()) {
+            light.setColor(RED);
+         }
+
+         foreach(VehicleLight vl in road.getVehicleLights()) {
+            vl.straight.setColor(RED;
+         }
+      }
+   }
+}
+
+------------------------------------------------------------------------
+Class: Road
+Data: isAvailable, List<DirectionLight> pedestrainLights, List<VehicleLight> vehicleLights
+Behavior:
+isAvailable() {
+   return isAvailable;
+}
+
+setAvailable(value) {
+   isAvailable = value;
+}
+

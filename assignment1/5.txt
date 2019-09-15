@@ -1,0 +1,82 @@
+Design a Parking lot
+
+driver can
+1. Enter car type
+2. get a nearest position and a ticket
+3. park the car
+4. leave the parking lot and Pay for the ticket
+
+
+------------------------------------------------------------------------
+Class: Car
+Data: carNum, type, checkinTime, entranceNum, ticket
+Behavior：
+findSlot() {
+   ticket = ParkingService.assignSlot(this);
+}
+leaveSlot() {
+	ParkingService.leave(this);
+}
+
+------------------------------------------------------------------------
+Class: ParkingService
+Data: 
+Behavior：
+assignSlot(car) {
+	List<Slot> allSlots = getAllSlots();
+	List<Slot> availableSlots;
+	foreach(Slot slot in availableSlots) {
+        if(slot.type == car.type && slot.isAvailable()){
+           availableSlots.add(slot);
+        }
+	}
+
+	if(availableSlots.size() > 0) {
+	   nearestSlot = availableSlot.get(0);
+	   foreach(Slot slot in availableSlots){
+          if(slot.distance(car.entranceNum) < nearestSlot.distance(car.entranceNum)){
+          nearestSlot = slot;
+          }
+	   }
+	   nearestSlot.setAvailable(false);
+	   ticket.slotNum = nearestSlot.slotNum;
+	   ticket.startTime = currentTime;
+	   return ticket;
+    } else {
+      System.out.printf("There is no slot");
+    }
+	
+}
+
+
+leave(car) {
+	price = (currentTime-car.ticket.startTime)*unitPrice;
+    PaymentService.pay(car.creditCard, price);
+    Slot slot = get(car.ticket.slotNum);
+    slot.state = false;
+}
+------------------------------------------------------------------------
+Class: Slot
+Data: state, distanceList,slotNum
+Behavior：
+distance(entranceNum) {
+	return distanceList.get(entranceNum);
+}
+isAvailable() {
+	return state;
+}
+setAvailable(value){
+	state = value;
+}
+------------------------------------------------------------------------
+Class: Ticket
+Data: startTime, slot
+Behavior：
+
+
+
+
+
+
+
+
