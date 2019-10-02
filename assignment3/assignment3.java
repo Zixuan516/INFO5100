@@ -414,5 +414,6 @@ Q10. What is the difference between Encapsulation and Abstraction
 The aim of Encapsulation is to protect the inner logic and make it easier to change codes without impacting outside worlds.
 While the aim of Abstraction is to simplify the logic visible to outside worlds, so that consumer quickly understands the functionality, without knowing unnecessary details.
 
+	
 
 
