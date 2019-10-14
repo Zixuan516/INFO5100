@@ -1,0 +1,9 @@
+Result: 6
+Step1, B b = new B();
+Step2, b.addAll(list);
+	  addCount += c.size();
+	  addCount++;
+	  addCount++;
+	  addCount++;
+Step3, b.getAddCount()=6;
+       b.getI()=0;

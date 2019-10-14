@@ -1,0 +1,2 @@
+Final is used to limit class, method and variable,  final class can't be inherited; final method can't be overridden; and final variable value can't be changed. 
+While finally is used to execute important code even if the exception isn’t handled.
