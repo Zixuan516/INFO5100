@@ -1,0 +1,22 @@
+package assignment8.q2.controller;
+
+import assignment8.q2.model.Student;
+
+import java.util.List;
+
+public interface StudentsManager {
+	public void addStudent(Student student) throws RuntimeException;
+
+	public void deleteStudent(String id);
+
+	public void modifyStudent(String id, Student student);
+
+	public Student findStudent(String name);
+
+	public int getStudentCount();
+
+	public void display();
+
+	public List<Student> getStudents();
+
+}
